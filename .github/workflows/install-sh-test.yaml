@@ -3,14 +3,13 @@ name: Test install.sh
 on:
   workflow_dispatch:
         inputs: 
-            version:
-                description: 'Version'
-                required: true
-                default: '8.0.0'
             client:
-                description: 'Client'
-                required: true
-                default: 'cnquery'
+                description: 'Client to Test'
+                type: choice
+                options:
+                - mondoo
+                - cnspec
+                - cnquery
 
 
 
