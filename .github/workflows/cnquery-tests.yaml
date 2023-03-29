@@ -1,0 +1,26 @@
+name: Test cnquery
+
+on:
+  workflow_dispatch:
+        inputs: 
+            version:
+                description: 'Version'
+                required: true
+                default: '8.0.0'
+
+
+jobs:
+    test-debian:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Install.sh on Debian 10
+              run: |
+                  docker run --rm -v $(pwd):/work -w /work debian:10 \
+                  bash -c "apt-get update && apt-get install -y curl && curl -sL curl -sSL https://install.mondoo.com/sh/cnquery | bash - && cnquery --version"
+                        - name: Install.sh on Debian 10
+            - name: Install.sh on Debian 11
+              run: |
+                  docker run --rm -v $(pwd):/work -w /work debian:11 \
+                  bash -c "apt-get update && apt-get install -y curl && curl -sL curl -sSL https://install.mondoo.com/sh/cnquery | bash - && cnquery --version"
+            
