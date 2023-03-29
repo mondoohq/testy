@@ -31,7 +31,7 @@ jobs:
             - name: Install.sh/${{ github.event.inputs.client }} on ${{ matrix.distro }}
               run: |
                   docker run --rm -v $(pwd):/work -w /work ${{ matrix.distro }} \
-                  bash -c "apt-get update && apt-get install -y curl && curl -sL curl -sSL https://install.mondoo.com/sh/${{ github.event.inputs.client }} | bash - && ${{ github.event.inputs.client }} version"
+                  bash -c "apt-get update && apt-get install -y curl && curl -sSL https://install.mondoo.com/sh/${{ github.event.inputs.client }} | bash - && ${{ github.event.inputs.client }} version"
 
     install-sh-yum:
         runs-on: ubuntu-latest
