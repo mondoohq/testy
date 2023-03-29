@@ -6,6 +6,7 @@ on:
       client:
         required: true
         type: string
+        default: 'cnspec'
   workflow_dispatch:
         inputs: 
             client:
