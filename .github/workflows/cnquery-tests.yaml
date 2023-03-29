@@ -10,17 +10,16 @@ on:
 
 
 jobs:
-    test-debian:
+    install-sh-linux:
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+              distro: ['debian:10', 'debian:11', 'ubuntu:18.04', 'ubuntu:20.04', 'centos:7', 'centos:8', 'fedora:32', 'fedora:33', 'opensuse/leap:15.2', 'opensuse/leap:15.3', 'opensuse/tumbleweed:latest', 'alpine:3.12', 'alpine:3.13', 'alpine:3.14']
         steps:
             - uses: actions/checkout@v2
             - name: Install.sh on Debian 10
               run: |
-                  docker run --rm -v $(pwd):/work -w /work debian:10 \
-                  bash -c "apt-get update && apt-get install -y curl && curl -sL curl -sSL https://install.mondoo.com/sh/cnquery | bash - && cnquery --version"
-                        - name: Install.sh on Debian 10
-            - name: Install.sh on Debian 11
-              run: |
-                  docker run --rm -v $(pwd):/work -w /work debian:11 \
-                  bash -c "apt-get update && apt-get install -y curl && curl -sL curl -sSL https://install.mondoo.com/sh/cnquery | bash - && cnquery --version"
+                  docker run --rm -v $(pwd):/work -w /work ${{ matrix.distro }}\
+                  bash -c "apt-get update && apt-get install -y curl && curl -sL curl -sSL https://install.mondoo.com/sh/cnquery | bash - && cnquery version"
+
             
