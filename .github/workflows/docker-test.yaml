@@ -1,0 +1,46 @@
+name: 'TEST: Docker Containers'
+
+on:
+  workflow_dispatch:
+
+
+
+jobs:
+    cnquery-containers:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+              tag: ['latest', 'latest-ubi-rootless', 'latest-rootless']
+        steps:
+            - uses: actions/checkout@v3
+            
+            - name: Testing mondoo/cnquery:${{ matrix.tag }}....
+              run: |
+                docker run --rm -v $(pwd):/work -w /work mondoo/cnquery:${{ matrix.tag }} \
+                bash -c "cnquery version"
+
+    cnspec-containers:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                tag: ['latest', 'latest-ubi-rootless', 'latest-rootless']
+        steps:
+            - uses: actions/checkout@v3
+            
+            - name: Testing mondoo/cnspec:${{ matrix.tag }}....
+              run: |
+                docker run --rm -v $(pwd):/work -w /work mondoo/cnspec${{ matrix.tag }} \
+                bash -c "cnspec version"                  
+
+    mondoo-containers:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                tag: ['latest', 'latest-ubi-rootless', 'latest-rootless']
+        steps:
+            - uses: actions/checkout@v3
+            
+            - name: Testing mondoo/client:${{ matrix.tag }}....
+              run: |
+                docker run --rm -v $(pwd):/work -w /work mondoo/client${{ matrix.tag }} \
+                bash -c "mondoo version"       
