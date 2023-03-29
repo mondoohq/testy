@@ -2,6 +2,7 @@ name: 'TEST: Arch Linux'
 
 on:
   workflow_dispatch:
+  workflow_call: 
 
 jobs:
     install-sh-apt:

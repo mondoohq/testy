@@ -2,7 +2,7 @@ name: 'TEST: Docker Containers'
 
 on:
   workflow_dispatch:
-
+  workflow_call: 
 
 
 jobs:

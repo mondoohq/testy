@@ -1,6 +1,12 @@
 name: 'TEST: macOS Package'
 
 on:
+  workflow_call:
+    inputs:
+      version:
+        description: 'Version to test'
+        required: true
+        default: '8.3.0'
   workflow_dispatch:
     inputs:
       version:

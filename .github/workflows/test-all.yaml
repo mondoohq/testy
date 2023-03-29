@@ -1,0 +1,25 @@
+name: 'Trigger ALL Tests'
+
+on:
+  workflow_dispatch:
+    inputs:
+        version:
+          description: 'Version to test'
+          required: true
+          default: '8.3.0'    
+
+jobs:
+    test-arch:
+        uses: ./.github/workflows/arch-test.yaml
+    test-docker:
+        uses: ./.github/workflows/docker-test.yaml
+    test-install-sh:
+        uses: ./.github/workflows/install-sh-test.yaml
+        with:
+          client: 'cnspec'
+    test-osx-pkg:
+        uses: ./.github/workflows/osx-pkg-test.yaml
+        with:
+          version: ${{ github.event.inputs.version }}
+    test-brew:
+        uses: ./.github/workflows/brew-test.yaml

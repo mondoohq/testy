@@ -1,6 +1,11 @@
 name: 'TEST: install.sh'
 
 on:
+  workflow_call: 
+    inputs: 
+      client:
+        required: true
+        type: string
   workflow_dispatch:
         inputs: 
             client:
