@@ -1,4 +1,4 @@
-name: Test cnquery
+name: Test install.sh
 
 on:
   workflow_dispatch:
@@ -19,7 +19,7 @@ jobs:
             - uses: actions/checkout@v2
             - name: Install.sh on ${{ matrix.distro }}
               run: |
-                  docker run --rm -v $(pwd):/work -w /work ${{ matrix.distro }}\
+                  docker run --rm -v $(pwd):/work -w /work ${{ matrix.distro }} \
                   bash -c "apt-get update && apt-get install -y curl && curl -sL curl -sSL https://install.mondoo.com/sh/cnquery | bash - && cnquery version"
 
             
