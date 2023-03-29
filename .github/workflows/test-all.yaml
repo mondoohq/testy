@@ -17,6 +17,10 @@ jobs:
         uses: ./.github/workflows/install-sh-test.yaml
         with:
           client: 'cnspec'
+    test-install-ps1:
+        uses: ./.github/workflows/install-ps1-test.yaml
+        with:
+              client: 'cnspec'
     test-osx-pkg:
         uses: ./.github/workflows/osx-pkg-test.yaml
         with:
