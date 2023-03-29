@@ -1,0 +1,26 @@
+name: 'TEST: Homebrew'
+
+on:
+  workflow_dispatch:
+
+
+
+jobs:
+    formulae:
+        runs-on: macos-latest
+        strategy:
+            matrix:
+              package: ['cnquery', 'cnspec', 'mondoo']
+        steps:
+            - uses: actions/checkout@v3
+            - name: Install Homebrew
+              run: | 
+                    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            
+            - name: Testing install of ${{ matrix.package }}....
+              run: |
+                brew install ${{ matrix.package }}
+
+            - name: Executing ${{ matrix.package }}....
+              run: |
+                ${{ matrix.package }} version
