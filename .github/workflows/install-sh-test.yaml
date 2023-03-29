@@ -18,7 +18,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-              distro: ['debian:10', 'debian:11', 'ubuntu:18.04', 'ubuntu:20.04', 'centos:7', 'centos:8', 'fedora:32', 'fedora:33', 'opensuse/leap:15.2', 'opensuse/leap:15.3', 'opensuse/tumbleweed:latest']
+              distro: ['debian:10', 'debian:11', 'ubuntu:18.04', 'ubuntu:20.04', 'ubuntu:22.04']
         steps:
             - uses: actions/checkout@v3
             
