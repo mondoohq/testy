@@ -14,7 +14,7 @@ on:
 
 
 jobs:
-    install-sh-linux:
+    install-sh-apt:
         runs-on: ubuntu-latest
         strategy:
             matrix:
@@ -26,6 +26,20 @@ jobs:
               run: |
                   docker run --rm -v $(pwd):/work -w /work ${{ matrix.distro }} \
                   bash -c "apt-get update && apt-get install -y curl && curl -sL curl -sSL https://install.mondoo.com/sh/${{ github.event.inputs.client }} | bash - && ${{ github.event.inputs.client }} version"
+
+    install-sh-yum:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+              distro: ['centos:7', 'centos:8', 'fedora:32', 'fedora:33', 'rockylinux:8', 'rockylinux:9', 'redhat/ubi8', 'redhat/ubi9']
+        steps:
+            - uses: actions/checkout@v3
+            
+            - name: Install.sh/${{ github.event.inputs.client }} on ${{ matrix.distro }}
+              run: |
+                  docker run --rm -v $(pwd):/work -w /work ${{ matrix.distro }} \
+                  bash -c "yum install curl -y && yum install curl -y && curl -sL curl -sSL https://install.mondoo.com/sh/${{ github.event.inputs.client }} | bash - && ${{ github.event.inputs.client }} version"
+
 
     install-sh-macos:
         runs-on: macos-latest
