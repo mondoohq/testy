@@ -9,6 +9,7 @@ jobs:
     cnquery-containers:
         runs-on: ubuntu-latest
         strategy:
+            fail-fast: false
             matrix:
               tag: ['latest', 'latest-ubi-rootless', 'latest-rootless']
         steps:
@@ -22,6 +23,7 @@ jobs:
     cnspec-containers:
         runs-on: ubuntu-latest
         strategy:
+            fail-fast: false
             matrix:
                 tag: ['latest', 'latest-ubi-rootless', 'latest-rootless']
         steps:
@@ -36,6 +38,7 @@ jobs:
     mondoo-containers:
         runs-on: ubuntu-latest
         strategy:
+            fail-fast: false
             matrix:
                 tag: ['latest', 'latest-ubi-rootless', 'latest-rootless']
         steps:
