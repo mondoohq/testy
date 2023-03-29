@@ -31,7 +31,8 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-              distro: ['centos:7', 'centos:8', 'fedora:32', 'fedora:33', 'rockylinux:8', 'rockylinux:9', 'redhat/ubi8', 'redhat/ubi9']
+              distro: ['centos:7', 'centos:stream9', 'fedora:32', 'fedora:33', 'rockylinux:8', 'rockylinux:9', 'redhat/ubi8', 'redhat/ubi9', 'oraclelinux:8', 'oraclelinux:9']
+              ## Note: centos:8 is obsoleted by Centos Stream 9 and EOL, do not use.
         steps:
             - uses: actions/checkout@v3
             
