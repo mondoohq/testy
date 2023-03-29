@@ -1,4 +1,4 @@
-name: Test install.sh
+name: 'TEST: install.sh'
 
 on:
   workflow_dispatch:
@@ -21,7 +21,8 @@ jobs:
               distro: ['debian:10', 'debian:11' ] #, 'ubuntu:18.04', 'ubuntu:20.04', 'centos:7', 'centos:8', 'fedora:32', 'fedora:33', 'opensuse/leap:15.2', 'opensuse/leap:15.3', 'opensuse/tumbleweed:latest', 'alpine:3.12', 'alpine:3.13', 'alpine:3.14']
         steps:
             - uses: actions/checkout@v3
-            - name: Install.sh on ${{ matrix.distro }}
+            
+            - name: Install.sh/${{ github.event.inputs.client }} on ${{ matrix.distro }}
               run: |
                   docker run --rm -v $(pwd):/work -w /work ${{ matrix.distro }} \
                   bash -c "apt-get update && apt-get install -y curl && curl -sL curl -sSL https://install.mondoo.com/sh/${{ github.event.inputs.client }} | bash - && ${{ github.event.inputs.client }} version"
@@ -33,7 +34,7 @@ jobs:
               os: ['macos-latest']
         steps:
             - uses: actions/checkout@v3
-            - name: Install.sh on ${{ matrix.os }}
+            - name: Install.sh/${{ github.event.inputs.client }} on ${{ matrix.os }}
               run: |
                   bash -c "$(curl -sSL https://install.mondoo.com/sh/${{ github.event.inputs.client }})"
                   ${{ github.event.inputs.client }} version
@@ -45,7 +46,7 @@ jobs:
               os: ['windows-latest']
         steps:
             - uses: actions/checkout@v3
-            - name: Install.sh on ${{ matrix.os }}
+            - name: Install.sh/${{ github.event.inputs.client }} on ${{ matrix.os }}
               run: |
                 Set-ExecutionPolicy Unrestricted -Scope Process -Force;
                 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
