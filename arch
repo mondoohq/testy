@@ -1,0 +1,20 @@
+
+benr@swell:~$ docker run -ti archlinux:latest bash
+
+
+
+# Update Arch package database:
+pacman -Syu --noconfirm
+
+# Install build tools
+pacman -S --noconfirm base-devel git 
+
+# Clone AUR Git Repo
+cd /tmp
+useradd test
+su test -c 'git clone https://aur.archlinux.org/cnquery && cd cnquery && makepkg'
+cd cnquery
+pacman -U --noconfirm cnquery-*.zst
+cnquery version
+
+
