@@ -19,6 +19,7 @@ jobs:
             
             - name: Testing install of ${{ matrix.package }}....
               run: |
+                brew tap mondoohq/mondoo
                 brew install ${{ matrix.package }}
 
             - name: Executing ${{ matrix.package }}....
