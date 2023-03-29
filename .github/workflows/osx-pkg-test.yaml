@@ -7,6 +7,7 @@ on:
         description: 'Version to test'
         required: true
         default: '8.3.0'
+        type: string
   workflow_dispatch:
     inputs:
       version:
