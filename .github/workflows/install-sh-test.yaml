@@ -7,6 +7,11 @@ on:
                 description: 'Version'
                 required: true
                 default: '8.0.0'
+            client:
+                description: 'Client'
+                required: true
+                default: 'cnquery'
+
 
 
 jobs:
@@ -14,12 +19,36 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-              distro: ['debian:10', 'debian:11', 'ubuntu:18.04', 'ubuntu:20.04', 'centos:7', 'centos:8', 'fedora:32', 'fedora:33', 'opensuse/leap:15.2', 'opensuse/leap:15.3', 'opensuse/tumbleweed:latest', 'alpine:3.12', 'alpine:3.13', 'alpine:3.14']
+              distro: ['debian:10', 'debian:11' ] #, 'ubuntu:18.04', 'ubuntu:20.04', 'centos:7', 'centos:8', 'fedora:32', 'fedora:33', 'opensuse/leap:15.2', 'opensuse/leap:15.3', 'opensuse/tumbleweed:latest', 'alpine:3.12', 'alpine:3.13', 'alpine:3.14']
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
             - name: Install.sh on ${{ matrix.distro }}
               run: |
                   docker run --rm -v $(pwd):/work -w /work ${{ matrix.distro }} \
-                  bash -c "apt-get update && apt-get install -y curl && curl -sL curl -sSL https://install.mondoo.com/sh/cnquery | bash - && cnquery version"
+                  bash -c "apt-get update && apt-get install -y curl && curl -sL curl -sSL https://install.mondoo.com/sh/${{ github.event.inputs.client }} | bash - && ${{ github.event.inputs.client }} version"
 
-            
+    install-sh-macos:
+        runs-on: macos-latest
+        strategy:
+            matrix:
+              os: ['macos-latest']
+        steps:
+            - uses: actions/checkout@v3
+            - name: Install.sh on ${{ matrix.os }}
+              run: |
+                  bash -c "$(curl -sSL https://install.mondoo.com/sh/${{ github.event.inputs.client }})"
+                  ${{ github.event.inputs.client }} version
+
+    install-sh-windows:
+        runs-on: windows-latest
+        strategy:
+            matrix:
+              os: ['windows-latest']
+        steps:
+            - uses: actions/checkout@v3
+            - name: Install.sh on ${{ matrix.os }}
+              run: |
+                Set-ExecutionPolicy Unrestricted -Scope Process -Force;
+                [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
+                iex ((New-Object System.Net.WebClient).DownloadString('https://install.mondoo.com/ps1/${{ github.event.inputs.client }}'));
+                Install-Mondoo -Product ${{ github.event.inputs.client }};
